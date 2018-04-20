@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<div layout:fragment="content">
+    <div class="container">
+
+        <div class="row">
+            <a th:href="@{/permission/add}"><button class="btn btn-primary">添加权限</button></a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table id="pTable" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>权限名称</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="permission : ${permissions}">
+                            <td th:text="${permission.id}">1</td>
+                            <td th:text="${permission.permissionName}">删除用户</td>
+                            <td>
+                                <a th:href="@{/permission/add}"><button class="btn btn-primary">添加权限</button></a>
+                                <a th:href="@{/permission/delete/{id}(id=${permission.id})}"><button class="btn btn-danger">删除权限</button></a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#pTable').DataTable({
+
+            });
+        });
+    </script>
+
+</div>

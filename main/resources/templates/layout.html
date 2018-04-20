@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<head>
+    <link rel="stylesheet" th:href="@{/bootstrap-3.3.6/bootstrap.min.css}" />
+    <script th:src="@{/jquery-1.11.3/jquery-1.11.3.min.js}"></script>
+    <script th:src="@{/bootstrap-3.3.6/bootstrap.min.js}"></script>
+
+
+
+    <link rel="stylesheet" th:href="@{/datatables/dataTables.bootstrap.min.css}"/>
+    <script th:src="@{/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/datatables/dataTables.bootstrap.min.js}"></script>
+
+
+
+</head>
+
+<body>
+
+<a th:href="@{/user/list}"><button class="btn btn-primary">用户管理</button></a>
+<a th:href="@{/role/list}"><button class="btn btn-primary">角色管理</button></a>
+<a th:href="@{/permission/list}"><button class="btn btn-primary">权限管理</button></a>
+
+
+<div class="container" layout:fragment="content">
+</div>
+
+
+
+
+
+
+</body>
+</html>

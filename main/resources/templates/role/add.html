@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+
+                <form th:action="@{/role/add}"  method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">角色名称</label>
+                        <div class="col-md-4">
+                            <input class="form-control" name="rolename"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">配置角色拥有的权限</label>
+                        <div class="col-md-4">
+                            <div th:each="permission : ${permissions}">
+
+                                <label th:text="${permission.permissionName}"></label>
+                                <input type="checkbox" name="permissionIds" th:value="${permission.id}" />
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div >
+                            <button type="submit" class="btn btn-primary">添加</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
