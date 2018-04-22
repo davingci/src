@@ -1,5 +1,6 @@
 package org.davingci.ht.web;
 
+import org.davingci.ht.domain.Permission;
 import org.davingci.ht.domain.Role;
 import org.davingci.ht.domain.User;
 import org.davingci.ht.service.RoleServiceImpl;
@@ -35,11 +36,11 @@ public class UserController {
     public String add(ModelMap model) {
         List<Role> roles = roleServiceImpl.list();
         model.addAttribute("roles",roles);
-        return "user/add";
+        return "user/add-multiselect";
     }
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
-    public String addAction(@RequestParam("username") String username, @RequestParam("roleIds") String[] roleIds) {
+    public String addAction(@RequestParam("username") String username, @RequestParam("to[]") String[] roleIds) {
         User user = new User(username);
         for(String roldId : roleIds) {
             Integer rId = Integer.valueOf(roldId);
@@ -50,6 +51,31 @@ public class UserController {
         return "redirect:/user/list";
     }
 
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String edit(ModelMap model, @PathVariable String id) {
+    	Integer pId = Integer.valueOf(id);
+    	User user = userServiceImpl.getById(pId);
+    	model.addAttribute("user", user);
+    	List<Role> roleList = roleServiceImpl.list();
+    	model.addAttribute("roleList", roleList);
+    	return "user/edit";
+    }
+    
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(@RequestParam("id") String id, @RequestParam("username") String username, @RequestParam("roleIds") String[] roleIds) {
+    	Integer pId = Integer.valueOf(id);
+    	User user = userServiceImpl.getById(pId);
+    	user.setUsername(username);
+        for(String roleId : roleIds) {
+            Integer ppId = Integer.valueOf(roleId);
+            Role role = roleServiceImpl.getById(ppId);
+            user.getRoles().add(role);
+        }
+
+        userServiceImpl.save(user);
+        return "redirect:/user/list";
+    }
+    
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
         userServiceImpl.deleteById(id);

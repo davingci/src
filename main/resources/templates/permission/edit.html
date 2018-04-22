@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row" th:object="${permission}">
+            <div  class="col-md-8">
+                <form th:action="@{/permission/update}" method="post" class="inline">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">New Permission Name</label>
+                        <div class="col-md-4">
+                        	<input type="hidden" id="id" name="id" th:field="${permission.id}">
+                            <input class="form-control" id="permissionName" name="permissionName"  th:field="${permission.permissionName}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div >
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

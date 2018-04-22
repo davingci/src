@@ -1,6 +1,7 @@
 package org.davingci.ht.service;
 
 import org.davingci.ht.dao.UserDao;
+import org.davingci.ht.domain.Role;
 import org.davingci.ht.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,10 @@ public class UserServiceImpl {
     public List<User> list() {
         return userDao.findAll();
     }
-
+    public User getById(Integer id) {
+        return userDao.getById(id);
+    }
+    
     public void delete(User user) {
         userDao.delete(user);
     }

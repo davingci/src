@@ -5,19 +5,20 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-
-                <form th:action="@{/role/add}"  method="post" class="form-horizontal">
-                    <div class="form-group">
+			
+                <form th:action="@{/role/update}"  method="post" class="form-horizontal">
+                    <div class="form-group" th:object=${role}>                    	
                         <label class="col-md-2 control-label">Role Name</label>
                         <div class="col-md-4">
-                            <input class="form-control" name="rolename"/>
+                        	<input type="hidden" id="id" name="id" th:value="${role.id}">
+                            <input class="form-control" name="rolename" th:value="${role.rolename}"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-2 control-label">Permission Assignment</label>
                         <div class="col-md-4">
-                            <div th:each="permission : ${permissions}">
+                            <div th:each="permission : ${permissionList}">
 
                                 <label th:text="${permission.permissionName}"></label>
                                 <input type="checkbox" name="permissionIds" th:value="${permission.id}" />
@@ -28,7 +29,7 @@
 
                     <div class="form-group">
                         <div >
-                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </div>
                 </form>

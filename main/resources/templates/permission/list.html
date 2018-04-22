@@ -5,26 +5,27 @@
     <div class="container">
 
         <div class="row">
-            <a th:href="@{/permission/add}"><button class="btn btn-primary">添加权限</button></a>
+            <a th:href="@{/permission/add}"><button class="btn btn-primary">New Permission</button></a>
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <table id="pTable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>编号</th>
-                            <th>权限名称</th>
-                            <th>操作</th>
+                            <th>ID</th>
+                            <th>Permission Name</th>
+                            <th>Operation</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="permission : ${permissions}">
                             <td th:text="${permission.id}">1</td>
-                            <td th:text="${permission.permissionName}">删除用户</td>
+                            <td th:text="${permission.permissionName}">Permission Name</td>
                             <td>
-                                <a th:href="@{/permission/add}"><button class="btn btn-primary">添加权限</button></a>
-                                <a th:href="@{/permission/delete/{id}(id=${permission.id})}"><button class="btn btn-danger">删除权限</button></a>
+                                <a th:href="@{/permission/add}"><button class="btn btn-primary">Add</button></a>
+                                <a th:href="@{/permission/update/{id}(id=${permission.id})}"><button class="btn btn-warning">Edit</button></a>
+                                <a th:href="@{/permission/delete/{id}(id=${permission.id})}"><button class="btn btn-danger">Delete</button></a>
                             </td>
                         </tr>
                     </tbody>

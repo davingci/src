@@ -10,17 +10,22 @@
     <link rel="stylesheet" th:href="@{/datatables/dataTables.bootstrap.min.css}"/>
     <script th:src="@{/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/datatables/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{/multiselect-master/multiselect.min.js}"></script>
+    <script th:src="@{/tutorial/multiselect-dev.js}"></script>
 
 
 
 </head>
 
 <body>
-
-<a th:href="@{/user/list}"><button class="btn btn-primary">用户管理</button></a>
-<a th:href="@{/role/list}"><button class="btn btn-primary">角色管理</button></a>
-<a th:href="@{/permission/list}"><button class="btn btn-primary">权限管理</button></a>
-
+<div class="container">
+<div class="row">
+<a th:href="@{/user/list}"><button class="btn btn-primary">User Management</button></a>
+<a th:href="@{/role/list}"><button class="btn btn-primary">Role Management</button></a>
+<a th:href="@{/permission/list}"><button class="btn btn-primary">Permission Management</button></a>
+<br><br>
+</div>
+</div>
 
 <div class="container" layout:fragment="content">
 </div>
@@ -29,6 +34,6 @@
 
 
 
-
+  
 </body>
 </html>

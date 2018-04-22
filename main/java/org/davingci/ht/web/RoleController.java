@@ -29,24 +29,48 @@ public class RoleController {
         List<Role> roles = roleServiceImpl.list();
         model.addAttribute("roles", roles);
 
-        return "/role/list";
+        return "role/list";
     }
 
     @RequestMapping(value= "/add", method = RequestMethod.GET)
     public String add(ModelMap model) {
         List<Permission> permissions = permissionServiceImpl.list();
         model.addAttribute("permissions",permissions);
-        return "role/add";
+        return "role/add-multiselect";
     }
 
     @RequestMapping(value= "/add", method = RequestMethod.POST)
-    public String addAction(@RequestParam("rolename") String rolename, @RequestParam("permissionIds") String[] permissionIds) {
+    public String addAction(@RequestParam("rolename") String rolename, @RequestParam("to[]") String[] permissionIds) {
 
         Role role = new Role(rolename);
 
         for(String permissionId : permissionIds) {
             Integer pId = Integer.valueOf(permissionId);
             Permission permission = permissionServiceImpl.getById(pId);
+            role.getPermissions().add(permission);
+        }
+
+        roleServiceImpl.save(role);
+        return "redirect:/role/list";
+    }
+    
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String edit(ModelMap model, @PathVariable String id) {
+    	Integer pId = Integer.valueOf(id);
+    	Role role = roleServiceImpl.getById(pId);
+    	model.addAttribute("role", role);
+    	List<Permission> permissionList = permissionServiceImpl.list();
+    	model.addAttribute("permissionList", permissionList);
+    	return "/role/edit";
+    }
+    
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(@RequestParam("id") String id, @RequestParam("permissionIds") String[] permissionIds) {
+    	Integer pId = Integer.valueOf(id);
+    	Role role = roleServiceImpl.getById(pId);
+        for(String permissionId : permissionIds) {
+            Integer ppId = Integer.valueOf(permissionId);
+            Permission permission = permissionServiceImpl.getById(ppId);
             role.getPermissions().add(permission);
         }
 
