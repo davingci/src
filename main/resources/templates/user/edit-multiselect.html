@@ -5,12 +5,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-
-                <form th:action="@{/user/add}"  method="post" class="form-horizontal">
+			      <form th:action="@{/user/update}"  method="post" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-md-2 control-label">Role Name</label>
-                        <div class="col-md-4">
-                            <input class="form-control" name="username"/>
+                        <label class="col-md-2 control-label">User Name</label>
+                        <div class="col-md-4" th:object="${user}">
+                        	<input type="hidden" id="${user.id}" name="id" th:value="${user.id}" />
+                            <input class="form-control" name="username" th:value="${user.username}"/>
                         </div>
                     </div>
 
@@ -18,9 +18,9 @@
                         <label class="col-md-2 control-label">Role Assignment</label>
                         <div class="col-md-4">
                         	<select name="from[]" class="js-multiselect form-control" size="8" multiple="multiple">
-                        		
-                            	<option th:each="role : ${roles}" th:value="${role.id}"><label th:text="${role.rolename}"></label></option>
-                            	
+                        		<div th:if="${roleNotChecked != null}">
+                            	<option th:each="role : ${roleNotChecked}" th:value="${role.id}"><label th:text="${role.rolename}"></label></option>
+                            	</div> 
                            	</select>
                         </div>
                         
@@ -32,7 +32,9 @@
     					</div>
     
     					<div class="col-md-4">
-       					 <select name="to[]" id="js_multiselect_to_1" class="form-control" size="8" multiple="multiple"></select>
+       					 <select name="to[]" id="js_multiselect_to_1" class="form-control" size="8" multiple="multiple">
+       					 	<option th:each="role : ${roleChecked}" th:value="${role.id}"><label th:text="${role.rolename}"></label></option>
+       					 </select>
     					</div>
                         
                     </div>
@@ -43,8 +45,8 @@
                         </div>
                     </div>
                 </form>
+ 
             </div>
         </div>
     </div>
 </div>
-

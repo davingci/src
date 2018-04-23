@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/role")
@@ -59,15 +61,23 @@ public class RoleController {
     	Integer pId = Integer.valueOf(id);
     	Role role = roleServiceImpl.getById(pId);
     	model.addAttribute("role", role);
+    	Set<Permission> permissionChecked = role.getPermissions();
     	List<Permission> permissionList = permissionServiceImpl.list();
-    	model.addAttribute("permissionList", permissionList);
-    	return "/role/edit";
+    	List<Permission> permissionNotChecked = new ArrayList<Permission>();
+    	for(Permission p:permissionList) {
+    		if(!permissionChecked.contains(p))
+    		 permissionNotChecked.add(p);
+    	}
+    	model.addAttribute("permissionChecked", permissionChecked);
+    	model.addAttribute("permissionNotChecked", permissionNotChecked);
+    	return "/role/edit-multiselect";
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(@RequestParam("id") String id, @RequestParam("permissionIds") String[] permissionIds) {
+    public String update(@RequestParam("id") String id, @RequestParam("rolename") String rolename, @RequestParam("to[]") String[] permissionIds) {
     	Integer pId = Integer.valueOf(id);
     	Role role = roleServiceImpl.getById(pId);
+    	role.setRolename(rolename);
         for(String permissionId : permissionIds) {
             Integer ppId = Integer.valueOf(permissionId);
             Permission permission = permissionServiceImpl.getById(ppId);

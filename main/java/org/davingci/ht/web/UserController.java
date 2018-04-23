@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
@@ -56,13 +59,21 @@ public class UserController {
     	Integer pId = Integer.valueOf(id);
     	User user = userServiceImpl.getById(pId);
     	model.addAttribute("user", user);
+    	Set<Role> roleChecked = user.getRoles();
     	List<Role> roleList = roleServiceImpl.list();
-    	model.addAttribute("roleList", roleList);
-    	return "user/edit";
+    	List<Role> roleNotChecked = new ArrayList<Role>();
+    	for(Role r:roleList) {
+    		if(!roleChecked.contains(r))
+    		 roleNotChecked.add(r);
+    	}
+
+    	model.addAttribute("roleNotChecked",roleNotChecked);
+    	model.addAttribute("roleChecked", roleChecked);
+    	return "user/edit-multiselect";
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(@RequestParam("id") String id, @RequestParam("username") String username, @RequestParam("roleIds") String[] roleIds) {
+    public String update(@RequestParam("id") String id, @RequestParam("username") String username, @RequestParam("to[]") String[] roleIds) {
     	Integer pId = Integer.valueOf(id);
     	User user = userServiceImpl.getById(pId);
     	user.setUsername(username);
