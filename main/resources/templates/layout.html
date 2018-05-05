@@ -6,30 +6,69 @@
     <script th:src="@{/bootstrap-3.3.6/bootstrap.min.js}"></script>
 
 
+		<link rel="stylesheet" th:href="@{/assets/vendor/font-awesome/4.5.0/css/font-awesome.min.css}" />
+
+		<link rel="stylesheet" th:href="@{/assets/dev/css/jianshu.css}" />
+		<link rel="stylesheet" th:href="@{/assets/dev/css/main.css}" />
+		<link rel="stylesheet" th:href="@{/assets/dev/css/resigBlog.css}" />
+
 
     <link rel="stylesheet" th:href="@{/datatables/dataTables.bootstrap.min.css}"/>
     <script th:src="@{/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/datatables/dataTables.bootstrap.min.js}"></script>
     <script th:src="@{/multiselect-master/multiselect.min.js}"></script>
-    <script th:src="@{/tutorial/multiselect-dev.js}"></script>
+    <script th:src="@{/assets/vendor/bootbox/bootbox.js}"></script>
+    <script th:src="@{/assets/dev/js/multiselect-dev.js}"></script>
+    
 
 
 
 </head>
 
 <body>
-<div class="container">
-<div class="row">
-<a th:href="@{/user/list}"><button class="btn btn-primary">User Management</button></a>
-<a th:href="@{/role/list}"><button class="btn btn-primary">Role Management</button></a>
-<a th:href="@{/permission/list}"><button class="btn btn-primary">Permission Management</button></a>
-<br><br>
-</div>
-</div>
 
-<div class="container" layout:fragment="content">
-</div>
 
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+ 	 <div class="width-limit" style="margin: 0 30px 0 30px">
+ 		 <!--top-left logo-->
+ 		 <a class="navbar-brand" href ="#" style="color:#ea6f5a;font-size: 24px; padding-top: 20px">Resig</a>
+ 		 <!--top-right sign in and register-->
+		 <a id="sign-up-user" href="#" class="navbar-brand pull-right" style="color:#ea6f5a; font-size: 18px; padding-top: 15px">
+ 		 	Sign Up<span class="glyphicon glyphicon-user"></span></a>
+
+		 <a id="user-log-off" href="/login.html" class="navbar-brand pull-right" style="color:#ea6f5a; font-size: 18px; padding-top: 15px">
+ 		  Log In<span class="glyphicon glyphicon-log-in"></span></a>
+
+
+ 	 </div>
+ 	 <div class="container">
+ 			 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+ 				 <span class="icon-bar"></span>
+ 				 <span class="icon-bar"></span>
+ 				 <span class="icon-bar"></span>
+ 			 </button>
+
+ 		 <div class="collapse navbar-collapse" id="menu">
+ 			 <ul class="nav navbar-nav">
+ 				 <li class="active" style="border:0; padding-top: 5px;">
+ 				   <a class="nav-brand" href="#" style="font-size: 18px;"><span class="glyphicon glyphicon-home" style="margin:0 10px 0 0"></span>HOME</a>
+ 			   </li>
+ 				 <li class="search" style="border:0;">
+ 					 <form target="_blank" accept-charset="UTF-8" action="">
+ 						 <input name="uft8" type="hidden" value="">
+ 						 <input type="text" name="sea" id="sea" value autocomplete="off" placeholder="search" class="search-input" data-mounted="1">
+ 						 <a class="search-btn" href="javascript:void(null)" style="font-size:24px"><span class="glyphicon glyphicon-search"></span></i></a>
+ 						 <div id="navbar-search-tips" style="display:none;"></div>
+ 					 </form>
+ 				 </li>
+ 			 </ul>
+ 		 </div>
+    </div>
+  </nav>
+<p th:text="${user}">not login</p>
+<input class="hidden" th:value="${user}">
+<div layout:fragment="content">
+</div>
 
 
 

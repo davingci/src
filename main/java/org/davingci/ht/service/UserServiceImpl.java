@@ -26,6 +26,9 @@ public class UserServiceImpl {
     public User getById(Integer id) {
         return userDao.getById(id);
     }
+    public User getByUsername(String username) {
+    	return userDao.getByUsername(username);
+    }
     
     public void delete(User user) {
         userDao.delete(user);

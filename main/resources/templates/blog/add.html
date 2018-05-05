@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<div layout:fragment="content">
+
+	
+<div class="container">
+	<div class="row">
+		<div class="col-xs-20">
+			<form class="form-horizontal" id="addBolg" >
+
+									<div class="form-group">
+										<input type="hidden" th:id="@{user.id}" th:name="@{user.username}">
+									</div>
+									
+									<div class="form-group">
+												<label for="input" class="col-xs-3 control-label">title</label>
+												<div class="col-xs-24">
+													<input type="text" class="form-control" id="title" name="title" placeholder="title" >
+												</div>
+									</div>
+									
+									<div class="form-group">
+												<label for="input" class="col-xs-3 control-label">description</label>
+												<div class="col-xs-24">
+													<input type="text" class="form-control" id="description" name="description" placeholder="description" >
+												</div>
+									</div>
+
+									<div class="form-group">
+												<label for="input" class="col-xs-3 control-label">content</label>
+												<div class="col-xs-24">
+													<textarea class="form-control" rows="10" id="content" name="content" th:value="@{write your blog here...}" >
+													</textarea>
+												</div>
+									</div>					
+
+										<div class="col-sm-offset-10 col-xs-10">
+											<button type="submit" id="editConfirm" class="btn btn-primary" >Confirm</button>
+										</div>
+				</form>
+
+
+
+	</div>
+		</div>
+</div>
+
+</div><!-- layout -->
+
+
+
+
+</body>
+</html>

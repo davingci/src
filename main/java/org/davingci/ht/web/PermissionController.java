@@ -18,7 +18,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/permission")
+@RequestMapping("/admin/permission")
 public class PermissionController {
 
     @Autowired

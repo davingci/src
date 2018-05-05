@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-<body>
 
 <div layout:fragment="content">
-
-
-
-
-<p th:text="${user}">not login</p>
 
 <div class="container">
       <div class="row">
@@ -191,42 +185,6 @@
 <!--/.container-->
 
 
-
-
-<script th:inline="javascript">
-
-$(document).ready(function () {
-/*<![CDATA[*/	
-	//handlig navbar
-	
-	var username = /*[[${session.user}]]*/;
-	var userId = /*[[${session.userId}]]*/;
-	
-	console.log(userId);
-	var scheme = /*[[${#request.getScheme()}]]*/;
-	var servername = /*[[${#request.getServerName()}]]*/;
-	var port = /*[[${#request.getServerPort()}]]*/;
-	var requestcontext = /*[[${#request.getContextPath()}]]*/;
-	if(username != null){	
-	var userpath = scheme + "://" + servername + ":" + port + "/user/" + userId;
-	var logoutpath = scheme + "://" + servername + ":" + port + "/logout";
-	$("#sign-up-user").attr('target','_blank')
-					  .attr('href', userpath)
-					  .html('Welcome ' + username);
-	$("#sign-up-user span").remove();
-//Log off and redirct to index page
-	var $userLogOff = $("#user-log-off");
-	$userLogOff.attr('href', logoutpath)
-						 .html('Sign Off');
-	$userLogOff.on('click', function(e){
-		console.log('clear sessionStorage');
-		window.localStorage.clear();
-		
-		})
-	}
-});
-/*]]*/
-</script>
 
 </div>
 

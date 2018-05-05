@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<div layout:fragment="content">
+    <div class="container">
+
+        <div class="row">
+            <a th:href="@{/role/add}"><button class="btn btn-primary">New Role</button></a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table id="rTable" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Role Name</th>
+                        <th>Role Permission</th>
+                        <th>Operation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="role : ${roles}">
+                        <td th:text="${role.id}">Role Id</td>
+                        <td th:text="${role.rolename}">Role Name</td>
+                        <td>
+                            <div th:each="permission : ${role.permissions}">
+                                <button type="button" class="btn btn-default btn-xs" th:text="${permission.permissionName}"></button>
+                            </div>
+                        </td>
+                        <td>
+                            <a th:href="@{/role/add}"><button class="btn btn-primary">Add</button></a>
+                            <a th:href="@{/role/update/{id}(id=${role.id})}"><button class="btn btn-warning">Edit</button></a>
+                            <a th:href="@{/role/delete/{id}(id=${role.id})}"><button class="btn btn-danger">Delete</button></a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#rTable').DataTable({
+
+            });
+        });
+    </script>
+
+</div>
