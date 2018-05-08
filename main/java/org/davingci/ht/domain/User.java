@@ -20,13 +20,15 @@ public class User implements Serializable {
     
     private String password;
     
- 
+    //role control
     @ManyToMany
     @JoinTable (name="user_role",
         joinColumns = {@JoinColumn(name="role_id")},
         inverseJoinColumns = {@JoinColumn(name="user_id")})
     private Set<Role> roles = new HashSet<>();
     
+    
+    //post and comment control
     @OneToMany(targetEntity = Post.class, cascade= {CascadeType.ALL}, fetch = FetchType.LAZY,
     		mappedBy = "user")    
     private List<Post> posts = new ArrayList<>();
@@ -34,6 +36,28 @@ public class User implements Serializable {
     @OneToMany(targetEntity = Comment.class, cascade= {CascadeType.ALL}, fetch = FetchType.LAZY,
     		mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "relation",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "following_id"))
+    private List<User> following;
+        
+    public List<User> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(List<User> following) {
+		this.following = following;
+	}
+
+	public List<User> getFollowers() {
+		return followers;
+	}
+
+	
+	@ManyToMany(mappedBy = "following")
+    private List<User> followers;
     
     public User() {
 

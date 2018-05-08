@@ -25,7 +25,16 @@ public class Post {
 		
 	private String content;
 	
+	private int thumbUpNum;
 	
+	public int getThumbUpNum() {
+		return thumbUpNum;
+	}
+
+	public void setThumbUpNum(int thumbUpNum) {
+		this.thumbUpNum = thumbUpNum;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="posted_at")
 	private Date postedAt = new Date();
@@ -38,7 +47,6 @@ public class Post {
 			fetch = FetchType.LAZY,
 			mappedBy = "post")
 	private List<Comment> comments = new ArrayList<>();
-	
 
 	public Long getId() {
 		return id;

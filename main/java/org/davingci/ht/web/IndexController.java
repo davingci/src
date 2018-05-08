@@ -113,7 +113,7 @@ public class IndexController {
     		return map;
     	}
     	session.setAttribute(WebSecurityConfig.SESSION_KEY, username);
-    	session.setAttribute("userId", user.getId());
+    	session.setAttribute("loginUserId", user.getId());
     	map.put("success", true);
     	map.put("message", "login successfully");
     	return map;

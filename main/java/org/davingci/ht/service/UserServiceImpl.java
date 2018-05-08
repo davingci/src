@@ -39,4 +39,11 @@ public class UserServiceImpl {
     }
 
 
+    public List<User> setFollowingUser(User loginUser, User newFollowingUser) {
+    	List<User> followingUsers = loginUser.getFollowing();
+    	followingUsers.add(newFollowingUser);
+    	return followingUsers;
+    }	
+   
+    
 }
