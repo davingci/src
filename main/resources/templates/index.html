@@ -7,36 +7,31 @@
 
 <div layout:fragment="content">
 
-
-
-
-<p th:text="${user}">not login</p>
-
 <div class="container">
       <div class="row">
 			<div class="col-md-17">
-				<h1>jianshu card</h1>
+				<h1>Cards</h1>
 			<div id="list-container">
 				<ul class="note-list" style="display:block; width:625px">
-					<li class="have-img" style="display:list-item">
+					<li class="have-img" style="display:list-item"   th:each="post : ${postList}">
 						<a class="wrap-img" href="#" target="_blank">
 							<img class="img-blur-done" src="./pic/pic-list1.jpg" alt="404">
 						</a>
 						<div class="content">
-							<div class="author">
-								<a class="avatar" href="#" target="_blank">
+							<div class="author" th:with="user=${post.getUser()}">
+								<a class="avatar" th:href="@{/u/{id}(id=${user.id})}" target="_blank" >
 									<img src="./pic/avatar-list1.png" alt="404">
 								</a>
 								<div class="info">
-									<a class="nickname" target="_blank" href="#">设计杂货店</a>
+									<a class="nickname" target="_blank" th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">设计杂货店</a>
 									<a target="_blank" href="#">
 										<img width="30" height="30" class="badge-icon" data-toggle="tooltip" title src="./pic/badge.png">
 									</a>
-									<span class="time" data-shared-at="2017">moment()-modifiedTime()</span>
+									<span class="time" data-shared-at="2017" th:text="${post.postedAt}">moment()-modifiedTime()</span>
 								</div>
 							</div>
-							<a class="title" target="_blank" href="#">29张没有ps的历史照片，看完第1张就泪奔了…</a>
-							<p class="abstract">01 幸福到来前的几秒钟：生日这天，爷爷给小家伙带来了他期待了很久很久的小狗...... 幸福有时候很简单，因为，总有人在默默在意着你的幸福。 02 医院里，生病的小男孩把床...</p>
+							<a class="title" target="_blank" th:href="@{/p/{id}(id=${post.id})}" th:text="${post.title}">29张没有ps的历史照片，看完第1张就泪奔了…</a>
+							<p class="abstract" th:text="${post.content}">01 幸福到来前的几秒钟：生日这天，爷爷给小家伙带来了他期待了很久很久的小狗...... 幸福有时候很简单，因为，总有人在默默在意着你的幸福。 02 医院里，生病的小男孩把床...</p>
 							<div class="meta">
 								<a class="collection-tag" target="_blank" href="#">摄影</a>
 								<a target="_blank" href="#"><i class="fa fa-eye" aria-hidden="true"></i>101</a>
@@ -46,127 +41,7 @@
 							</div>
 						</div>
 					</li>
-					<li class="have-img" style="display:list-item">
-						<a class="wrap-img" href="#" target="_blank">
-							<img class="img-blur-done" src="./pic/pic-list2.jpeg" alt="404">
-						</a>
-						<div class="content">
-							<div class="author">
-								<a class="avatar" href="#" target="_blank">
-									<img src="./pic/avatar-list2.jpg" alt="404">
-								</a>
-								<div class="info">
-									<a class="nickname" target="_blank" href="#">井底女蛙</a>
-									<a target="_blank" href="#">
-										<img width="30" height="30" class="badge-icon" data-toggle="tooltip" title src="./pic/badge.png">
-									</a>
-									<span class="time" data-shared-at="2017">moment()-modifiedTime()</span>
-								</div>
-							</div>
-							<a class="title" target="_blank" href="#">女蛙呱呱｜第一课：六岁以前的性教育</a>
-							<p class="abstract">公交车上，爷爷抱着孙子，一边说笑，一边玩弄孩子的生殖器；马路边会看到幼年的孩子当众便溺；几天前共央君的热文《作为95后，可我对性知识了解的少之又少》……所有这些让我羞愧，因为...</p>
-							<div class="meta">
-								<a class="collection-tag" target="_blank" href="#">故事</a>
-								<a target="_blank" href="#"><i class="fa fa-eye" aria-hidden="true"></i>101</a>
-								<a target="_blank" href="#"><i class="fa fa-comments" aria-hidden="true"></i>102</a>
-								<span><i class="fa fa-gratipay" aria-hidden="true"></i>103</span>
-								<span><i class="fa fa-usd" aria-hidden="true"></i>104</span>
-							</div>
-						</div>
-					</li>
-					<li class="have-img" style="display:list-item">
-						<a class="wrap-img" href="#" target="_blank">
-							<img class="img-blur-done" src="./pic/pic-list3.jpg" alt="404">
-						</a>
-						<div class="content">
-							<div class="author">
-								<a class="avatar" href="#" target="_blank">
-									<img src="./pic/avatar-list3.jpg" alt="404">
-								</a>
-								<div class="info">
-									<a class="nickname" target="_blank" href="#">井底女蛙</a>
-									<a target="_blank" href="#">
-										<img width="30" height="30" class="badge-icon" data-toggle="tooltip" title src="./pic/badge.png">
-									</a>
-									<span class="time" data-shared-at="2017">moment()-modifiedTime()</span>
-								</div>
-							</div>
-							<a class="title" target="_blank" href="#">“杀妻藏尸案”——为你我没穿婚纱，你却让我披白纱</a>
-							<p class="abstract">文/苏子游 我很少跟风蹭话题，为求点击博眼球去写热点，因为很多热点文章的真实性得不到保证，再加上一窝蜂的情绪化表达，往往让人失去客观冷静的头脑。 但对于“杀妻藏尸案”，我到有...</p>
-							<div class="meta">
-								<a class="collection-tag" target="_blank" href="#">社会热点</a>
-								<a target="_blank" href="#"><i class="fa fa-eye" aria-hidden="true"></i>101</a>
-								<a target="_blank" href="#"><i class="fa fa-comments" aria-hidden="true"></i>102</a>
-								<span><i class="fa fa-gratipay" aria-hidden="true"></i>103</span>
-								<span><i class="fa fa-usd" aria-hidden="true"></i>104</span>
-							</div>
-						</div>
-					</li>
-					<li class="have-img" style="display:list-item">
-						<a class="wrap-img" href="#" target="_blank">
-							<img class="img-blur-done" src="./pic/pic-list4.jpg" alt="404">
-						</a>
-						<div class="content">
-							<div class="author">
-								<a class="avatar" href="#" target="_blank">
-									<img src="./pic/avatar-list4.jpg" alt="404">
-								</a>
-								<div class="info">
-									<a class="nickname" target="_blank" href="#">卡兰诺</a>
-									<a target="_blank" href="#">
-									  <i class="fa fa-star" aria-hidden="true" data-toggle="tooltip" data-original-title="简书历史优秀作者"></i>
-										<div class="tooltip fade top in" role="tooltip" id="tooltip004" style="top: -30.2px; left: 24.7px; display:block;">
-											<div class="tooltip-arrow" style="left:50%;"></div>
-											<div class="tooltip-inner">简书历史优秀作者</div>
-										</div>
-									</a>
-									<span class="time" data-shared-at="2017">moment()-modifiedTime()</span>
-								</div>
-							</div>
-							<a class="title" target="_blank" href="#">南唐最痴情女子：被李煜辜负，却甘愿为他而死</a>
-							<p class="abstract">文/卡兰诺 01 “春花秋月何时了？往事知多少。小楼昨夜又东风，故国不堪回首月明中。雕栏玉砌应犹在，只是朱颜改。问君能有几多愁？恰似一江春水向东流。” 这首《虞美人》是南唐主...</p>
-							<div class="meta">
-								<a class="collection-tag" target="_blank" href="#">历史</a>
-								<a target="_blank" href="#"><i class="fa fa-eye" aria-hidden="true"></i>101</a>
-								<a target="_blank" href="#"><i class="fa fa-comments" aria-hidden="true"></i>102</a>
-								<span><i class="fa fa-gratipay" aria-hidden="true"></i>103</span>
-								<span><i class="fa fa-usd" aria-hidden="true"></i>104</span>
-							</div>
-						</div>
-					</li>
-					<li class="have-img" style="display:list-item">
-						<a class="wrap-img" href="#" target="_blank">
-							<img class="img-blur-done" src="./pic/pic-list5.jpg" alt="404">
-						</a>
-						<div class="content">
-							<div class="author">
-								<a class="avatar" href="#" target="_blank">
-									<img src="./pic/avatar-list5.jpg" alt="404">
-								</a>
-								<div class="info">
-									<a class="nickname" target="_blank" href="#">Nicole林小白</a>
-									<a target="_blank" href="#">
-									  <i class="fa fa-umbrella" aria-hidden="true" data-toggle="tooltip" data-original-title="简书签约作者"></i>
-										<div class="tooltip fade top in" role="tooltip" id="tooltip004" style="top: -30.2px; left: 24.7px; display:block;">
-											<div class="tooltip-arrow" style="left:50%;"></div>
-											<div class="tooltip-inner">简书签约作者</div>
-										</div>
-									</a>
-									<span class="time" data-shared-at="2017">moment()-modifiedTime()</span>
-								</div>
-							</div>
-							<a class="title" target="_blank" href="#">你那么努力，为什么还那么失败？</a>
-							<p class="abstract">文/林小白 互联网的畅通，微博、知乎等平台的兴起，新媒体的横空出世，让一拨人感到了焦虑。原先信息相对闭塞时，大家都安于自己的圈子，觉得自己过得挺不错的，结果互联网一来，通过微...</p>
-							<div class="meta">
-								<a class="collection-tag" target="_blank" href="#">读书</a>
-								<a target="_blank" href="#"><i class="fa fa-eye" aria-hidden="true"></i>101</a>
-								<a target="_blank" href="#"><i class="fa fa-comments" aria-hidden="true"></i>102</a>
-								<span><i class="fa fa-gratipay" aria-hidden="true"></i>103</span>
-								<span><i class="fa fa-usd" aria-hidden="true"></i>104</span>
-							</div>
-						</div>
-					</li>
-
+										
 				</ul>
 			</div><!--list-container-->
 			<a data-page="1" href="" class="load-more">阅读更多</a>
@@ -196,40 +71,7 @@
 
 
 
-<script th:inline="javascript">
 
-$(document).ready(function () {
-/*<![CDATA[*/	
-	//handlig navbar
-	
-	var username = /*[[${session.user}]]*/;
-	var userId = /*[[${session.userId}]]*/;
-	
-	console.log(userId);
-	var scheme = /*[[${#request.getScheme()}]]*/;
-	var servername = /*[[${#request.getServerName()}]]*/;
-	var port = /*[[${#request.getServerPort()}]]*/;
-	var requestcontext = /*[[${#request.getContextPath()}]]*/;
-	if(username != null){	
-	var userpath = scheme + "://" + servername + ":" + port + "/user/" + userId;
-	var logoutpath = scheme + "://" + servername + ":" + port + "/logout";
-	$("#sign-up-user").attr('target','_blank')
-					  .attr('href', userpath)
-					  .html('Welcome ' + username);
-	$("#sign-up-user span").remove();
-//Log off and redirct to index page
-	var $userLogOff = $("#user-log-off");
-	$userLogOff.attr('href', logoutpath)
-						 .html('Sign Off');
-	$userLogOff.on('click', function(e){
-		console.log('clear sessionStorage');
-		window.localStorage.clear();
-		
-		})
-	}
-});
-/*]]*/
-</script>
 
 </div>
 

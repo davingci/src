@@ -43,6 +43,11 @@ public class Post {
 	@JoinColumn(name="user_id", nullable=false)
 	private User user;
 	
+	public Date getPostedAt() {
+		return postedAt;
+	}
+
+
 	@OneToMany(cascade = CascadeType.ALL,
 			fetch = FetchType.LAZY,
 			mappedBy = "post")

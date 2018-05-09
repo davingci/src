@@ -1,5 +1,6 @@
 package org.davingci.ht.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,13 +46,24 @@ public class IndexController {
     public String index(HttpServletRequest request, HttpServletResponse response, Model model) {
     	HttpSession session = request.getSession();
     	if (session.getAttribute(WebSecurityConfig.SESSION_KEY) == null)
-    		{return "index";}
+    		{model.addAttribute("loginUser", null);
+    		}else {    	
+    			String username = String.valueOf(session.getAttribute(WebSecurityConfig.SESSION_KEY));
+    			//login user
+    			User loginUser = userServiceImpl.getByUsername(username);
+    			model.addAttribute("loginUser", loginUser);
+    			}
+    	//post list for index
     	List<Post> postList = postServiceImpl.list();
-    	String username = String.valueOf(session.getAttribute(WebSecurityConfig.SESSION_KEY));
-    	User user = userServiceImpl.getByUsername(username);
-    	model.addAttribute("postList", postList);    	
-    	  return "index";
+    	model.addAttribute("postList", postList);  
+    	//user list from each post
+    	List<User> userList = new ArrayList<>();
+    		for(Post post : postList) {
+    			userList.add(post.getUser()); }
+    		model.addAttribute("userList", userList);
+    	return "index";
     }
+   
     
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup() {

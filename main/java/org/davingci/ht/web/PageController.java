@@ -26,6 +26,7 @@ public class PageController {
 	public String blogPageLoad(@PathVariable String id, Model model) {
 		Post post = postServiceImpl.getById(Long.parseLong(id));
 		User user = post.getUser();
+		
 		List<Comment> comments = post.getComments();
 		model.addAttribute("post", post);
 		model.addAttribute("user", user);

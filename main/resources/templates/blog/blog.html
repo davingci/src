@@ -5,27 +5,27 @@
 <div layout:fragment="content">
 
 <div class="note">
-	<div class="post">
+	<div class="post" th:object="${post}">
 		<div class="article">
-			<h1 class="title" id="title1">Title</h1>
-			<div class="author">
+			<h1 class="title" id="title1" th:text="${post.title}">Title</h1>
+			<div class="author" th:object="${user}">
 				<a class="avatar" href="">
 				  <img id="avatar1" src="./pic/avatar-list1.png" alt="404">
 			  </a>
 				<div class="info">
-					<span id="authorName1" class="name"><a href="#">author name</a></span>
+					<span id="authorName1" class="name"><a href="#" th:text="${user.username}">author name</a></span>
 					<!--follow button-->
 					<a class="btn btn-success follow"><i class="fa fa-plus" aria-hidden="true"></i><span>Follow</span></a>
 					<div class="meta">
-						<span id="lastModifyAt1" class="publish-time">2017-11-1</span>
+						<span id="lastModifyAt1" class="publish-time" th:text="${post.postedAt}">2017-11-1</span>
 						<span id="wordage1" class="wordage">1000 words</span>
 						<span id="viewCount1" class="views-count">100 views</span>
-						<span class="comments-count">numOfComments</span>
-						<span id="favouriteCount1" class="likes-count">10 likes</span>
+						<span class="comments-count" th:text="${#lists.size(comments)}">numOfComments</span>
+						<span id="favouriteCount1" class="likes-count" th:text="${post.thumbUpNum} + ' ' + likes">10 likes</span>
 					</div>
 				</div>
 			</div>
-			<div id="html1" data-note-content class="show-content">
+			<div id="html1" data-note-content class="show-content" th:text="${post.content}">
 				blog goes here
 			</div>
 			<div class="" style="min-height:47px">
@@ -33,10 +33,10 @@
 			</div>
 		</div>
 		<div class="follow-detail">
-			<div class="info">
+			<div class="info" th:object="${user}">
 				<a id="avatar2" class="avatar" href="#"><img src="./pic/avatar-list1.png" alt="404"></a>
-				<a class="btn btn-success follow"><i class="fa fa-plus" aria-hidden="true"></i><span id="markCount1">Follow</span></a>
-				<a id="userId1" class="title" href="#">userId</a>
+				<a class="btn btn-success follow" th:href="@{/following/{userId}(userId=${user.id})}"><i class="fa fa-plus" aria-hidden="true"></i><span id="markCount1">Follow</span></a>
+				<a id="userId1" class="title" th:href="@{/u/{userId}(userId=${user.id})}" th:text="${user.username}">userId</a>
 				<p id="info1">total 1000 words, 3 follows, 10 thumb up</p>
 			</div>
 			<div class="signature">
@@ -44,16 +44,26 @@
 			</div>
 		</div>
 		<div class="meta-bottom">
+			<div class="like">
+				<div class="btn like-group">
+					<div class="btn-like">
+						<a th:href="@{/thumbup/{postId}(postId=${post.id})}">Likes</a>
+					</div>
+					<div class="modal-wrap">
+						<a th:text="${post.thumbUpNum}"></a>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div>
-			<div id="comment-list" class="comment-list">
+			<div id="comment-list" class="comment-list" th:object="${comments}">
 				<div>
 					<form class="new-comment">
 						<a class="avatar" href="#">
 							<img src="./pic/avatar-list1.png" alt="404">
 						</a>
 						<div class="sign-container">
-							<a href="#" class="btn btn-sign">Sign In</a>
+							<a href="/login" class="btn btn-sign">Sign In</a>
 							<span>before comment</span>
 						</div>
 					</form>
@@ -89,111 +99,11 @@
 
 
 $(function(){
-		//var token = "Bearer" + token<%= session.getAttribute("token")%>;
-		//var loginUserId = <%= session.getAttribute("userId") %>;
-		//var loginUsername = <%= session.getAttribute("username") %>;
-		var loginUserId = '1';
-		var para = getParaFromUrl();
-		//console.log(para);
-		var blogId = para.blogId;
-		if (loginUserId == '') {
-			//ajax without login
-			var option = {
-				"method" : "GET",
-				"url" : "http://39.106.21.117:8080/v1/api/blog/get/" + blogId,
-				"success" : function (response) {
-					console.log(response);
-					var data = response.data;
-					$("#title1").html(data.title);
-					$("#avatar1").attr("avatar", "");//to be added
-					$("#authorName1").html(data.username + " " + data.userId);
-					$("#markCount1").html(data.markCount + " Follow");
-					$("#lastModifyAt1").html(moment(data.lastModifyAt).format("YYYY-MM-DD"));
-					$("#wordage1").html(data.html.length + " Words");
-					$("#viewCount1").html(data.viewCount + " Views");
-					$("#favouriteCount1").html(data.favouriteCount + " Thumb Up");
-					$("#html1").html(data.html);
-					$("#avatar2").attr("avatar", "");//to be added
-					$("#userId1").html(data.username + ' ' + data.userId);
-					$("#info1").html("total " + data.html.length + " words, " + data.markCount + " follow and " + data.favouriteCount + " Thumb Up");
-				}
-			};
-			$.ajax(option);
-		}//end if
-		else {
-			//handlig navbar
-			//then ajax
-			console.log('loginUserId ' + loginUserId);
-			//userInfo path
-			//var userInfo = '<%= request.getContextPath()%>/pages/blog/resig-userInfo.jsp?userId=' + userId
 
-			//navbar manipulate
-			var userInfo = loginUserId;
-			$("#sign-up-user").attr('target','_blank')
-												.attr('href', userInfo)
-												.html('Welcome ' + loginUserId);
-			$("#sign-up-user span").remove();
-      //Log off and redirct to index page
-			var indexPath = 'resig-index-ajax.html';
-			var $userLogOff = $("#user-log-off");
-			$userLogOff.attr('href', indexPath)
-								 .html('Log Off');
-			$userLogOff.on('click', function(e){
-				console.log('clear sessionStorage');
-				window.localStorage.clear();
-			});
-     //ajax and manipulate main
-			var option = {
-				"method" : "GET",
-				"url" : "http://39.106.21.117:8080/v1/api/blog/get/" + blogId,
-				"success" : function (response) {
-					//console.log(response);
-					var data = response.data;
-					$("#title1").html(data.title);
-					$("#avatar1").attr("avatar", "");//to be added
-					$("#authorName1").html(data.username + " " + data.userId);
-					$("#markCount1").html(data.markCount + " Follow");
-					$("#lastModifyAt1").html(moment(data.lastModifyAt).format("YYYY-MM-DD"));
-					$("#wordage1").html(data.html.length + " Words");
-					$("#viewCount1").html(data.viewCount + " Views");
-					$("#favouriteCount1").html(data.favouriteCount + " Thumb Up");
-					$("#html1").html(data.html);
-					$("#avatar2").attr("avatar", "");//to be added
-					$("#userId1").html(data.username + ' ' + data.userId);
-					$("#info1").html("total " + data.html.length + " words, " + data.markCount + " follow and " + data.favouriteCount + " Thumb Up");
-					//Is this my blog? yes, add edit btn; no, do nothing.
-					var blogUserId = data.userId;
-					console.log('blogUserId ' + data.userId);
-					if(loginUserId == blogUserId){
-						$("#editBtn").css("display", "block");
-					}
 
-				}
-			};
-			$.ajax(option);
-		}//end else
-
-$("#editBtn").on('click', function(){
-	console.log('go to edit page');
-	//location.href='<%= request.getContextPath()%>/pages/blog/editBlog.jsp?blogId=' + blogId;
-	window.location.href= 'resig-blogEdit.html?blogId=' + blogId;
-});
 
 });//end ready
 
-function getParaFromUrl() {
-
-	  var url = location.search; //obtain substring after '?'
-	   var paraFromUrl = new Object();
-	   if (url.indexOf("?") != -1) {
-	      var str = url.substr(1);
-	      strs = str.split("&");
-	      for(var i = 0; i < strs.length; i ++) {
-	         paraFromUrl[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
-	      }
-	   }
-	   return paraFromUrl;
-	}
 
 
 

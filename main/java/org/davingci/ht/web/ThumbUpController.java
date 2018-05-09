@@ -32,7 +32,7 @@ public class ThumbUpController {
 	@Autowired
 	private ThumbUpServiceImpl thumbUpServiceImpl;
 	
-	@RequestMapping(value = "/p/thumbup/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/thumbup/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> thumbUp(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Map<String, Object> map = new HashMap<>();

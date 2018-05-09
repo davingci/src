@@ -38,15 +38,28 @@ public class HibernateTutorialApplicationTests {
 	@Test
 	public void contextLoads() {
 		
-		User user1 = userServiceImpl.getByUsername("user1");
-		Post post2 = postServiceImpl.getByTitle("post title 2");
-		Long uid = user1.getId().longValue();
-		Long pid = post2.getId();
-		ThumbUp thumbUp = new ThumbUp();
-		thumbUp.setPid(pid);
-		thumbUp.setUid(uid);
-		thumbUpDao.save(thumbUp);
-
+		Post p3 = new Post();
+		p3.setTitle("post title 3");
+		p3.setContent("post content 3");
+		p3.setThumbUpNum(10);
+				
+		User user3= new User();
+		user3.setUsername("user3");
+		user3.setPassword("123");
+		p3.setUser(user3);
+		userServiceImpl.save(user3);
+		postServiceImpl.save(p3);	
+	
+		User user4 = new User();
+		user4.setUsername("user4");
+		user4.setPassword("123");
+		userServiceImpl.save(user4);
+		Post p4 = new Post();
+		p4.setTitle("post title 4");
+		p4.setContent("post content 4");
+		p4.setThumbUpNum(10);
+		p4.setUser(user4);
+		postServiceImpl.save(p4);
 		
 		
 	}
