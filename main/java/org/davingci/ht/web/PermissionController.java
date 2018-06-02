@@ -54,7 +54,7 @@ public class PermissionController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update( HttpServletRequest request) {
     	Permission p = permissionServiceImpl.getById(Integer.valueOf(request.getParameter("id")));
-    	p.setPermissionName(request.getParameter("permissionName"));
+    	p.setPermission(request.getParameter("permissionName"));
         permissionServiceImpl.save(p);
     	return "redirect:/permission/list";
     } 

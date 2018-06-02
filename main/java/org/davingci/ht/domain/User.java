@@ -14,18 +14,50 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
+    @Column(unique=true)
     private String username;
+    
+    private String name;
     
     private String password;
     
-    //role control
-    @ManyToMany
+    private String salt;
+    
+    private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
+    
+    public byte getState() {
+		return state;
+	}
+
+	public void setState(byte state) {
+		this.state = state;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+
+	//role control
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable (name="user_role",
-        joinColumns = {@JoinColumn(name="role_id")},
-        inverseJoinColumns = {@JoinColumn(name="user_id")})
-    private Set<Role> roles = new HashSet<>();
+        joinColumns = {@JoinColumn(name="user_id")},
+        inverseJoinColumns = {@JoinColumn(name="role_id")})
+    private List<Role> roles;
     
     
     //post and comment control
@@ -67,7 +99,7 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -79,11 +111,11 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
     
@@ -123,6 +155,12 @@ public class User implements Serializable {
 		this.comments.remove(comment);
 	}
 	
+	/* salt */
+	
+	public String getCredentialsSatl() {
+		return this.username + this.salt;
+	}
+	
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -141,8 +179,11 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", username=" + username +  
+                ",password=" + password + 
+                ", salt =" + salt +
+                ",state=" + state +
                 ", roles=" + roles +
-                '}';
+                "}";
     }
 }

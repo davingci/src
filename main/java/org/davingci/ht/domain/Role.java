@@ -3,6 +3,7 @@ package org.davingci.ht.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,15 +15,36 @@ public class Role implements Serializable {
     private Integer id;
 
     private String rolename;
+    
+    private String description;
+    
+    private Boolean available = Boolean.FALSE;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(Boolean available) {
+		this.available = available;
+	}
+
+	@ManyToMany
+	@JoinTable(name="user_role", joinColumns= {@JoinColumn(name="role_id")}, inverseJoinColumns= {@JoinColumn(name="user_id")})
+    private List<User> users;
 
     @ManyToMany
     @JoinTable(name = "role_permission",
-            joinColumns = {@JoinColumn(name = "permission_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Permission> permissions = new HashSet<>();
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+    private List<Permission> permissions;
 
     public Role() {
 
@@ -32,6 +54,36 @@ public class Role implements Serializable {
         this.rolename = rolename;
     }
 
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
+    
 
     @Override
     public boolean equals(Object o) {
@@ -52,41 +104,10 @@ public class Role implements Serializable {
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", rolename='" + rolename + '\'' +
-                ", users=" + users +
+                ", rolename='" + rolename +
+                ",description=" + description +
+                ",available=" + available +                
                 ", permissions=" + permissions +
-                '}';
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getRolename() {
-        return rolename;
-    }
-
-    public void setRolename(String rolename) {
-        this.rolename = rolename;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Set<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
+                "}";
     }
 }

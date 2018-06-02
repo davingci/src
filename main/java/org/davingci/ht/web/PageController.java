@@ -36,7 +36,7 @@ public class PageController {
 
 	@RequestMapping("/u/{id}")
 	public String userPageLoad(@PathVariable String id, Model model) {
-		User user = userServiceImpl.getById(Integer.valueOf(id));
+		User user = userServiceImpl.getById(Long.valueOf(id));
 		List<Post> postList = user.getPosts();
 		model.addAttribute("user", user);
 		model.addAttribute("postList", postList);

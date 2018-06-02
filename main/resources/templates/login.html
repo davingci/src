@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-<body>
+
 <div layout:fragment="content">
 
 <div class="container">
@@ -20,45 +20,7 @@
 </div>
 
 
-<script th:inline="javascript">
 
-$(document).ready(function () {
-/*<![CDATA[*/	
-
-	//form submit
-	var scheme = /*[[${#request.getScheme()}]]*/;
-	var servername = /*[[${#request.getServerName()}]]*/;
-	var port = /*[[${#request.getServerPort()}]]*/;
-	var requestcontext = /*[[${#request.getContextPath()}]]*/;
-	var postUrl = scheme + "://" + servername + ":" + port + requestcontext + "/login";
-	console.log(postUrl);
-    $("#btnLogin").click(function () {
-        var options = {
-            url: postUrl,
-            type: 'post',
-            dataType: 'text',
-            data: $("#loginForm").serialize(),
-            success: function (response) {
-            	var data = JSON.parse(response);
-            	console.log(data);
-
-                if (data['success'] == true) {
-                    
-                	window.location.href = "/";
-                }
-                else {
-                	bootbox.alert(data['message']);
-                }
-            }
-        };
-        	
-        $.ajax(options);
-        return false;
-    });
-});
-/*]]*/
-</script>
 
 </div>
-</body>
-</html>
+

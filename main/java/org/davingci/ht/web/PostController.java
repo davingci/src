@@ -35,7 +35,7 @@ public class PostController {
     
     @RequestMapping(value = "/add",  method = RequestMethod.GET)
     public String add(ModelMap model, @RequestParam("id") String id) {
-    	Integer pId = Integer.valueOf(id);
+    	Long pId = Long.valueOf(id);
         User user = userServiceImpl.getById(pId);
         model.addAttribute("user",user);
         return "blog/add";

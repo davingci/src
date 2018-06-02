@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.davingci.ht.domain.Post;
 import org.davingci.ht.domain.User;
 import org.davingci.ht.service.PostServiceImpl;
@@ -17,6 +19,7 @@ import org.davingci.ht.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +53,7 @@ public class IndexController {
     		}else {    	
     			String username = String.valueOf(session.getAttribute(WebSecurityConfig.SESSION_KEY));
     			//login user
-    			User loginUser = userServiceImpl.getByUsername(username);
+    			User loginUser = userServiceImpl.findByUsername(username);
     			model.addAttribute("loginUser", loginUser);
     			}
     	//post list for index
@@ -82,7 +85,7 @@ public class IndexController {
         	return map;
         }
     	
-    	User retUsr = userServiceImpl.getByUsername(username);
+    	User retUsr = userServiceImpl.findByUsername(username);
     	if(retUsr != null)
     	{
     		map.put("success", false);
@@ -115,20 +118,30 @@ public class IndexController {
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> loginPost(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session){
-    	Map<String, Object> map = new HashMap<>();
+    public String loginPost(HttpServletRequest request, Map<String, Object> map){
+    	System.out.println("IndexController.login");
     	
-    	User user = userServiceImpl.getByUsername(username);
-    	if(!user.getPassword().equals(password)) {
-    		map.put("success", false);
-    		map.put("message", "error username or password");
-    		return map;
+    	String exception = (String) request.getAttribute("shiroLoginFailure");
+    	String msg = "";
+    	if(exception != null) {
+    		if(UnknownAccountException.class.getName().equals(exception)) {
+    			System.out.println("UnknowAccountExcetion: ");
+    			msg = "UnknowAccountException: ";
+    		} else if (IncorrectCredentialsException.class.getName().equals(exception)) {
+    			System.out.println("IncorrectCredentialsException: ");
+    			msg = "IncorrectCredentialsException: ";
+    		} else if("kaptchaValidateFailed".equals(exception)) {
+    			System.out.println("kaptahcValidateFailed");
+    			msg = "kaptchaValidateFailed";
+    		} else {
+    			msg = "else >> " + exception;
+    			System.out.println("else -->" + exception);
+    		}
     	}
-    	session.setAttribute(WebSecurityConfig.SESSION_KEY, username);
-    	session.setAttribute("loginUserId", user.getId());
-    	map.put("success", true);
-    	map.put("message", "login successfully");
-    	return map;
+    	map.put("msg", msg);
+    	return "/login";
+
+    	
     }
     
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

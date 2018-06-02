@@ -5,12 +5,12 @@ import org.davingci.ht.domain.Role;
 import org.davingci.ht.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDao extends JpaRepository<User,Integer> {
+public interface UserDao extends JpaRepository<User,Long> {
 
-    public void deleteById(Integer id);
-    public User getById(Integer id);
+    public void deleteById(Long id);
+    public User getById(Long id);
 
 
-    public User getByUsername(String username);
+    public User findByUsername(String username);
    
 }

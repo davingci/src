@@ -26,10 +26,10 @@ public class FollowController {
 	
 	@RequestMapping(value = "/following/{id}",  method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> followingAction(@PathVariable("id") Integer id, HttpServletRequest request, HttpServletResponse response, Model model){
+	public Map<String, Object> followingAction(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response, Model model){
 		Map<String, Object> map = new HashMap<>();
 		HttpSession session = request.getSession();
-		Integer loginUserId = (Integer) session.getAttribute("loginUserId");
+		Long loginUserId = (Long) session.getAttribute("loginUserId");
 		User user =  userServiceImpl.getById(id);
 		User loginUser = userServiceImpl.getById(loginUserId);
 		List<User> userFollowingList = loginUser.getFollowing();

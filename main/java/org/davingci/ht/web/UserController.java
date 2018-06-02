@@ -56,10 +56,10 @@ public class UserController {
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String edit(ModelMap model, @PathVariable String id) {
-    	Integer pId = Integer.valueOf(id);
+    	Long pId = Long.valueOf(id);
     	User user = userServiceImpl.getById(pId);
     	model.addAttribute("user", user);
-    	Set<Role> roleChecked = user.getRoles();
+    	List<Role> roleChecked = user.getRoles();
     	List<Role> roleList = roleServiceImpl.list();
     	List<Role> roleNotChecked = new ArrayList<Role>();
     	for(Role r:roleList) {
@@ -74,7 +74,7 @@ public class UserController {
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(@RequestParam("id") String id, @RequestParam("username") String username, @RequestParam("to[]") String[] roleIds) {
-    	Integer pId = Integer.valueOf(id);
+    	Long pId = Long.valueOf(id);
     	User user = userServiceImpl.getById(pId);
     	user.setUsername(username);
         for(String roleId : roleIds) {
@@ -88,7 +88,7 @@ public class UserController {
     }
     
     @RequestMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Integer id) {
+    public String delete(@PathVariable("id") Long id) {
         userServiceImpl.deleteById(id);
         return "redirect:/user/list";
     }

@@ -61,7 +61,7 @@ public class RoleController {
     	Integer pId = Integer.valueOf(id);
     	Role role = roleServiceImpl.getById(pId);
     	model.addAttribute("role", role);
-    	Set<Permission> permissionChecked = role.getPermissions();
+    	List<Permission> permissionChecked = role.getPermissions();
     	List<Permission> permissionList = permissionServiceImpl.list();
     	List<Permission> permissionNotChecked = new ArrayList<Permission>();
     	for(Permission p:permissionList) {

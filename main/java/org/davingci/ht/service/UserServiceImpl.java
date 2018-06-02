@@ -23,18 +23,18 @@ public class UserServiceImpl {
     public List<User> list() {
         return userDao.findAll();
     }
-    public User getById(Integer id) {
+    public User getById(Long id) {
         return userDao.getById(id);
     }
-    public User getByUsername(String username) {
-    	return userDao.getByUsername(username);
+    public User findByUsername(String username) {
+    	return userDao.findByUsername(username);
     }
     
     public void delete(User user) {
         userDao.delete(user);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         userDao.deleteById(id);
     }
 

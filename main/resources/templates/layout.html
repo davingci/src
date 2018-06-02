@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
-    <link rel="stylesheet" th:href="@{/bootstrap-3.3.6/bootstrap.min.css}" />
+    <link rel="stylesheet" href="/bootstrap-3.3.6/bootstrap.min.css" th:href="@{/bootstrap-3.3.6/bootstrap.min.css}" />
+    <link rel="stylesheet" href="/datatables/dataTables.bootstrap.min.css" th:href="@{/datatables/dataTables.bootstrap.min.css}"/>
+	<link rel="stylesheet" href="/assets/vendor/font-awesome/4.5.0/css/font-awesome.min.css" th:href="@{/assets/vendor/font-awesome/4.5.0/css/font-awesome.min.css}" />
+	<link rel="stylesheet" href="/assets/dev/css/jianshu.css" th:href="@{/assets/dev/css/jianshu.css}" />
+	<link rel="stylesheet" href="/assets/dev/css/main.css" th:href="@{/assets/dev/css/main.css}" />
+	<link rel="stylesheet" href="/assets/dev/css/resigBlog.css" th:href="@{/assets/dev/css/resigBlog.css}" />
+
+   
     <script th:src="@{/jquery-1.11.3/jquery-1.11.3.min.js}"></script>
     <script th:src="@{/bootstrap-3.3.6/bootstrap.min.js}"></script>
-
-
-		<link rel="stylesheet" th:href="@{/assets/vendor/font-awesome/4.5.0/css/font-awesome.min.css}" />
-
-		<link rel="stylesheet" th:href="@{/assets/dev/css/jianshu.css}" />
-		<link rel="stylesheet" th:href="@{/assets/dev/css/main.css}" />
-		<link rel="stylesheet" th:href="@{/assets/dev/css/resigBlog.css}" />
-
-
-    <link rel="stylesheet" th:href="@{/datatables/dataTables.bootstrap.min.css}"/>
     <script th:src="@{/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/datatables/dataTables.bootstrap.min.js}"></script>
     <script th:src="@{/multiselect-master/multiselect.min.js}"></script>
     <script th:src="@{/assets/vendor/bootbox/bootbox.js}"></script>
     <script th:src="@{/assets/dev/js/multiselect-dev.js}"></script>
     
-
-
-
 </head>
 
 <body>
@@ -69,8 +63,7 @@
  		 </div>
     </div>
   </nav>
-<p th:text="${user}">not login</p>
-<input class="hidden" th:value="${user}">
+
 <div layout:fragment="content">
 </div>
 
