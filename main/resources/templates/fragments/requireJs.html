@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="requireJs">
+
+    <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/assets/vendor/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{assets/vendor/datatables/dataTables.bootstrap.min.js}"></script>
+    <script th:src="@{assets/vendor/multiselect-master/multiselect.min.js}"></script>
+    <script th:src="@{/assets/vendor/bootbox/bootbox.js}"></script>
+    
+    
+    <script th:src="@{/assets/dev/js/multiselect-dev.js}"></script>
+
+
+    <!-- 导航下拉菜单恢复链接，可以点击，不适合在手机上使用，删除 -->
+    <!--
+    <script>
+        $(document).ready(function(){
+            $(document).off('click.bs.dropdown.data-api');
+        });
+    </script>
+    -->
+
+</div>
+
+</body>
+</html>

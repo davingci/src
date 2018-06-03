@@ -1,82 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-<head th:fragment="head">
-    <meta charset="utf-8">
-    </head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 
-<div layout:fragment="content">
+<main role="main" layout:fragment="content">
 
-<div class="container">
-      <div class="row">
-			<div class="col-md-17">
-				<h1>Cards</h1>
-			<div id="list-container">
-				<ul class="note-list" style="display:block; width:625px">
-					<li class="have-img" style="display:list-item"   th:each="post : ${postList}">
-						<a class="wrap-img" href="#" target="_blank">
-							<img class="img-blur-done" src="./pic/pic-list1.jpg" alt="404">
-						</a>
-						<div class="content">
-							<div class="author" th:with="user=${post.getUser()}">
-								<a class="avatar" th:href="@{/u/{id}(id=${user.id})}" target="_blank" >
-									<img src="./pic/avatar-list1.png" alt="404">
-								</a>
-								<div class="info">
-									<a class="nickname" target="_blank" th:href="@{/u/{id}(id=${user.id})}" th:text="${user.username}">设计杂货店</a>
-									<a target="_blank" href="#">
-										<img width="30" height="30" class="badge-icon" data-toggle="tooltip" title src="./pic/badge.png">
-									</a>
-									<span class="time" data-shared-at="2017" th:text="${post.postedAt}">moment()-modifiedTime()</span>
-								</div>
-							</div>
-							<a class="title" target="_blank" th:href="@{/p/{id}(id=${post.id})}" th:text="${post.title}">29张没有ps的历史照片，看完第1张就泪奔了…</a>
-							<p class="abstract" th:text="${post.content}">01 幸福到来前的几秒钟：生日这天，爷爷给小家伙带来了他期待了很久很久的小狗...... 幸福有时候很简单，因为，总有人在默默在意着你的幸福。 02 医院里，生病的小男孩把床...</p>
-							<div class="meta">
-								<a class="collection-tag" target="_blank" href="#">摄影</a>
-								<a target="_blank" href="#"><i class="fa fa-eye" aria-hidden="true"></i>101</a>
-								<a target="_blank" href="#"><i class="fa fa-comments" aria-hidden="true"></i>102</a>
-								<span><i class="fa fa-gratipay" aria-hidden="true"></i>103</span>
-								<span><i class="fa fa-usd" aria-hidden="true"></i>104</span>
-							</div>
-						</div>
-					</li>
-										
-				</ul>
-			</div><!--list-container-->
-			<a data-page="1" href="" class="load-more">阅读更多</a>
-			</div>
+    <link rel="stylesheet" th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}" />
+    <div class="row">
+        <div class="offset-md-1  col-md-8 offset-1 col-11">
+            <ul class="articles">
+                <li class="have-img" th:each="blog : ${blogs}">
+                    <div class="img-wrap">
+                        <img th:src="${blog.thumbnailUrl}"/>
+                    </div>
+                    <div class="content">
+                        <div class="author">
+                            <div class="avatar">
+                                <img th:src="@{/img/blog/avtar.jpg}"/>
+                            </div>
+                            <div class="info">
+                                <div class="nickname" th:text="${blog.createdBy}">��С��</div>
+                                <span th:text="${#strings.substring(blog.createdDate,0,10)}">04.19 12:21</span>
+                                <button class="btn btn-default btn-outline-dark btn-sm">ԭ��</button>
+                            </div>
+
+                        </div>
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}">
+                            <div class="title" th:text="${blog.title}">��ƶ������µģ���ȱ����3������</div>
+                        </a>
+                        <div class="abstract" th:text="${blog.abstractContent}">˵��ƶ�ÿ���˶���ܶ�Զ֮���Ͼ�ȱ��Ǯ����������þٲ�ά�衣 ����������һ�仰��ƶ������������������� ���Ͽ���һ�����ӣ��������Ϲ�����˼�ϴ������ɻ���...
+
+                        </div>
+                        <div class="meta">
+                            <i class="meta-icon fa fa-eye">&nbsp;168</i>
+                            <i class="meta-icon fa fa-comment">&nbsp;28</i>
+                            <i class="meta-icon fa fa-thumbs-up">&nbsp;24</i>
+                            <i class="meta-icon fa fa-heart">&nbsp;20</i>
+                        </div>
+                    </div>
+                </li>
+
+
+
+            </ul>
+
+        </div>
     </div>
-    <!--/row-->
-
-			<div class="row">
-
-				<div class="col-md-6">
-					<div class="row">
-
-					</div><!--row -->
-
-				</div>
-				<div class="col-md-6">
-					<div class="row">
-
-					</div><!-- /.row -->
-
-				</div>
-
-			</div><!-- /.row -->
-</div>
-<!--/.container-->
-
-
-
-
-
-
-</div>
-
-
-
-
-</body>
-</html>
+</main>

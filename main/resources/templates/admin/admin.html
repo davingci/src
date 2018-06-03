@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body>
+
+<div layout:fragment="content">
+
+<div class="container">
+<div class="row">
+<a th:href="@{/user/list}"><button class="btn btn-primary">User Management</button></a>
+<a th:href="@{/role/list}"><button class="btn btn-primary">Role Management</button></a>
+<a th:href="@{/permission/list}"><button class="btn btn-primary">Permission Management</button></a>
+
+<p th:text="${user}">not login</p>
+
+
+
+<br><br>
+</div>
+</div>
+
+
+
+
+</div>
+
+</body>
+</html>

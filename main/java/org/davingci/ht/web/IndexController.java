@@ -64,13 +64,13 @@ public class IndexController {
     		for(Post post : postList) {
     			userList.add(post.getUser()); }
     		model.addAttribute("userList", userList);
-    	return "index";
+    	return "/index";
     }
    
     
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup() {
-    	return "signup";
+    	return "/signup";
     }
     
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -113,7 +113,7 @@ public class IndexController {
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-    	return "login";
+    	return "/login";
     } 
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)

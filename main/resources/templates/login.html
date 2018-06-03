@@ -1,26 +1,119 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
 
-<div layout:fragment="content">
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>小流</title>
 
+
+    <meta name="description" content="Resig Spring boot">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,user-scalable=no">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}" />
+    
+
+    <script th:src="@{/assets/vendor/jquery/jquery.2.1.3.min.js}"></script>
+    <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.js}"></script>
+
+    <script th:src="@{/assets/vendor/bootbox/bootbox.js}"></script>
+
+    <script th:src="@{/assets/dev/js/resig.js}"></script>
+</head>
+
+
+<body>
 <div class="container">
-
 <div class="row">
-<form id="loginForm" method="post">
-  
-    <lable>username</lable> 
-      <input name="username" type="text" placeholder="username" />
-    <lable>password</lable>
-      <input name="password" type="password" placeholder="password" />
-    <button id="btnLogin" type="button" class="btn btn-primary">login</button>    
+<div class="col-sm-12">
 
-</form>
+<div class="login">
+
+    <div class="form-wrap px-5 vertical-center">
+        <div class="title py-4">小流</div>
+        <form class="login-form  form-horizontal" id="loginForm">
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-user"></i></div>
+            </div>
+            <input type="text" class="form-control" name="username" id="username" placeholder="用户名">
+        </div>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-lock"></i></div>
+            </div>
+            <input type="password" class="form-control" name="password" id="password" placeholder="密码">
+        </div>
+
+        <div class="form-group">
+            <div class="col-12 col-sm-12">
+                <input  type="checkbox" name="rememberMe" /> &nbsp;&nbsp;记住我
+                <a class="ml-3" href="#">忘记密码？</a>
+            </div>
+
+
+
+        </div>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-primary col-12 col-sm-12" id="btnLogin">登录</button>
+        </div>
+
+
+
+    </form>
+        <div class="mb-4">&copy; Davingci 2018</div>
+    </div>
+
+    <script>
+        $(function () {
+            $("#btnLogin").on("click",function () {
+                var formData = new FormData();
+                formData.append("username",$("#username").val());
+                formData.append("password",$("#password").val());
+                var currentUrl = window.location.href;
+                var index = currentUrl.indexOf("?url=");
+                var url = index == -1 ? "" : currentUrl.substring(index+5,currentUrl.length);
+                formData.append("url",url);
+                $.ajax({
+                    url:baseurl + "/auth/login",
+                    method:"post",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if(response.code == 200) {
+                            var loginReturn = response.data.url;
+                            if(loginReturn != "") {
+                                window.location.href = loginReturn;
+                            }
+                            else {
+                                window.location.href = baseurl + "/";
+                            }
+
+                        }
+                        else {
+                            bootbox.alert(response.message);
+                        }
+                    },
+                    failure: function (response) {
+                        bootbox.alert("用户名密码错误");
+                    }
+                });
+            })
+        })
+    </script>
 </div>
 
 </div>
-
-
-
-
-</div>
-
+</div><!--row-->
+</div><!--container-->
+</body>
+</html>

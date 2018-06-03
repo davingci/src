@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body>
+
+<div layout:fragment="content">
+
+<div class="note">
+	<div class="post" th:object="${post}">
+		<div class="article">
+			<h1 class="title" id="title1" th:text="${post.title}">Title</h1>
+			<div class="author" th:object="${user}">
+				<a class="avatar" href="">
+				  <img id="avatar1" src="./pic/avatar-list1.png" alt="404">
+			  </a>
+				<div class="info">
+					<span id="authorName1" class="name"><a href="#" th:text="${user.username}">author name</a></span>
+					<!--follow button-->
+					<a class="btn btn-success follow"><i class="fa fa-plus" aria-hidden="true"></i><span>Follow</span></a>
+					<div class="meta">
+						<span id="lastModifyAt1" class="publish-time" th:text="${post.postedAt}">2017-11-1</span>
+						<span id="wordage1" class="wordage">1000 words</span>
+						<span id="viewCount1" class="views-count">100 views</span>
+						<span class="comments-count" th:text="${#lists.size(comments)}">numOfComments</span>
+						<span id="favouriteCount1" class="likes-count" th:text="${post.thumbUpNum} + ' ' + likes">10 likes</span>
+					</div>
+				</div>
+			</div>
+			<div id="html1" data-note-content class="show-content" th:text="${post.content}">
+				blog goes here
+			</div>
+			<div class="" style="min-height:47px">
+				<a id="editBtn" class="btn btn-danger" style="display:none; float:right; margin-top:4px; width:100px; font-size:16px;"><i class="fa fa-edit" aria-hidden="true"></i><span>Edit</span></a>
+			</div>
+		</div>
+		<div class="follow-detail">
+			<div class="info" th:object="${user}">
+				<a id="avatar2" class="avatar" href="#"><img src="./pic/avatar-list1.png" alt="404"></a>
+				<a class="btn btn-success follow" th:href="@{/following/{userId}(userId=${user.id})}"><i class="fa fa-plus" aria-hidden="true"></i><span id="markCount1">Follow</span></a>
+				<a id="userId1" class="title" th:href="@{/u/{userId}(userId=${user.id})}" th:text="${user.username}">userId</a>
+				<p id="info1">total 1000 words, 3 follows, 10 thumb up</p>
+			</div>
+			<div class="signature">
+				user signature
+			</div>
+		</div>
+		<div class="meta-bottom">
+			<div class="like">
+				<div class="btn like-group">
+					<div class="btn-like">
+						<a th:href="@{/thumbup/{postId}(postId=${post.id})}">Likes</a>
+					</div>
+					<div class="modal-wrap">
+						<a th:text="${post.thumbUpNum}"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div id="comment-list" class="comment-list" th:object="${comments}">
+				<div>
+					<form class="new-comment">
+						<a class="avatar" href="#">
+							<img src="./pic/avatar-list1.png" alt="404">
+						</a>
+						<div class="sign-container">
+							<a href="/login" class="btn btn-sign">Sign In</a>
+							<span>before comment</span>
+						</div>
+					</form>
+				</div>
+				<div id="normal-comment-list" class="normal-comment-list">
+					comments go here
+				</div>
+				<div></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="note-bottom">
+	<div>
+		<div class="recommend-note">
+			<div class="meta">
+			</div>
+			<div class="list">
+				<h3>recommended blog lists go here</h3>
+				<div class="note have-img">list1</div>
+				<div class="note have-img">list2</div>
+				<div class="note have-img">list3</div>
+				<div class="note have-img">list4</div>
+				<div class="note have-img">list5</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+
+
+
+$(function(){
+
+
+
+});//end ready
+
+
+
+
+</script>
+
+
+</div>
+
+
+
+
+</body>
+</html>
